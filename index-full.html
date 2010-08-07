@@ -36,6 +36,7 @@ for 1Kb
 		*/
     (function() {    
 	    var size=200,
+	        check=199,
 	        buffer1=[],
 	        buffer2=[],
 	        cvs,
@@ -60,7 +61,7 @@ for 1Kb
 	    function processWater(source, dest) {
 	        for (var i=dest.length-size; i>size; i--) {
 		        var xi = i % size;
-		        if ((xi==0) || (xi==size-1)) continue; 
+		        if ((xi==0) || (xi==check)) continue; 
 			    dest[i] = (
 			        ((source[i-1]+
 			        source[i+1]+
@@ -76,7 +77,7 @@ for 1Kb
             for (var i=buffer.length-size; i>size; i--) {
 		        // check for bounds
 		        var xi = i % size;
-		        if ((xi==0) || (xi==size-1)) continue; 
+		        if ((xi==0) || (xi==check)) continue; 
 			    xoffset = buffer[i-1] - buffer[i+1];
 	            yoffset = buffer[i-size] - buffer [i+size];
 	            var offset = i+xoffset+yoffset*size;
@@ -106,7 +107,7 @@ for 1Kb
 	    function create(event) {
 	        var x = event.clientX;
 	        var y = event.clientY;
-	        buffer1[y*size+x] = -400;    
+	        buffer1[y*size+x] = -900;    
 	    }
 	    
 	    cvs=document.body.children[0];
@@ -114,7 +115,7 @@ for 1Kb
 	    cvs.onclick = clickHandler;
 	    ctx=cvs.getContext('2d');
 	    gradient();
-	    for( var i = (initData.length / 4); i >0 ; i--) {
+	    for( var i = (initData.length / 4); i > 0 ; i--) {
 	        buffer1[i]=0;
 	        buffer2[i]=0;
         }
@@ -124,9 +125,9 @@ for 1Kb
 	        buffer1 = buffer2;
 	        buffer2 = tmp;
 	        texture(buffer1);
-	    }, 10);
+	    }, 33);
 	    setInterval(function() {
-	        buffer1[(mathRand(size) * size + mathRand(size))] += mathRand(-500);    
+	        buffer1[(mathRand(size) * size + mathRand(size))] += mathRand(-900);    
 	    }, 300);
     })();
     
