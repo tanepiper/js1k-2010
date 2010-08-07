@@ -1,0 +1,15 @@
+<!doctype html> 
+<html> 
+	<head> 
+		<title>JS1k, 1k demo submission [id]</title> 
+		<meta charset="utf-8" /> 
+	</head> 
+	<body> 
+		<canvas id="c"></canvas> 
+		<script>
+window.onload=function(){function n(){var a;g.clearRect(0,0,b,h);a=g.createRadialGradient(0,0,0,0,0,b);var d=[e(99),e(99),e(99)];a.addColorStop(0,"rgb("+d.join(",")+")");d=[e(255),e(255),e(255)];a.addColorStop(1,"rgb("+d.join(",")+")");g.fillStyle=a;g.fillRect(0,0,b,h);l=g.getImageData(0,0,b,h).data;m=g.getImageData(0,0,b,h)}function o(){setInterval(function(){for(var a=k,d=i,c=d.length-b;c>b;c--){var f=c%b;if(!(f==0||f==b-1)){d[c]=(a[c-1]+a[c+1]+a[c-b]+a[c+b]>>1)-d[c];d[c]-=d[c]>>5}}a=i;i=k;k=a;
+a=i;for(d=a.length-b;d>b;d--){c=d%b;if(!(c==0||c==b-1)){c=a[d-1]-a[d+1];f=a[d-b]-a[d+b];c=d+c+f*b;if(c>0&&c<a.length)for(f=4;f>0;f--)m.data[d*4+f]=l[c*4+f]}}try{g.putImageData(m,0,0)}catch(p){}},10);setInterval(function(){i[e(h)*b+e(b)]+=e(-500)},300)}function e(a){return Math.round(Math.random()*a)}var b=200,h=200,i=[],k=[],j,g,l,m;(function(){j=document.body.children[0];j.setAttribute("width",b);j.setAttribute("height",h);j.onclick=n;g=j.getContext("2d");n();for(var a=l.length/4;a>0;a--){i[a]=0;
+k[a]=0}o()})()};
+        </script> 
+	</body> 
+</html>
