@@ -1,16 +1,16 @@
 <!doctype html> 
 <html> 
-	<head> 
-		<title>JS1k, 1k demo submission</title> 
-		<meta charset="utf-8" /> 
-	</head> 
-	<body> 
-		<canvas id="c"></canvas>
-		<ul>
-		    <li>Click on the canvas to create a new ripple</li>
-		    <li>Hold Ctrl + Click to change the gradient background</li> 
-		</ul>
-		<script>
+  <head> 
+    <title>JS1k, 1k demo submission</title> 
+    <meta charset="utf-8" /> 
+  </head> 
+  <body> 
+    <canvas id="c"></canvas>
+    <ul>
+        <li>Click on the canvas to create a new ripple</li>
+        <li>Hold Ctrl + Click to change the gradient background</li> 
+    </ul>
+    <script>
 /**
 Generates procedural water ripple effects on top of a randomly
 generated gradient background.
@@ -37,5 +37,5 @@ Some work based on the origional algorithim from http://bit.ly/bmDo1Q, optimised
 (function(){function m(){var b;h.clearRect(0,0,a,a);b=h.createRadialGradient(0,0,0,0,0,a);var d=[f(99),f(99),f(99)];b.addColorStop(0,"rgb("+d.join(",")+")");d=[f(255),f(255),f(255)];b.addColorStop(1,"rgb("+d.join(",")+")");h.fillStyle=b;h.fillRect(0,0,a,a);k=h.getImageData(0,0,a,a).data;l=h.getImageData(0,0,a,a)}function f(b){return Math.round(Math.random()*b)}var a=200,i=[],j=[],e,h,k,l;e=document.body.children[0];e.width=e.height=a;e.onclick=function(b){if(b.ctrlKey)m();else i[b.clientY*a+b.clientX]=
 -900};h=e.getContext("2d");m();for(e=k.length/4;e>0;e--){i[e]=0;j[e]=0}setInterval(function(){for(var b=j,d=i,c=d.length-a;c>a;c--){var g=c%a;if(!(g==0||g==199)){d[c]=(b[c-1]+b[c+1]+b[c-a]+b[c+a]>>1)-d[c];d[c]-=d[c]>>5}}b=i;i=j;j=b;b=i;for(d=b.length-a;d>a;d--){c=d%a;if(!(c==0||c==199)){c=b[d-1]-b[d+1];g=b[d-a]-b[d+a];c=d+c+g*a;if(c>0&&c<b.length)for(g=4;g>0;g--)l.data[d*4+g]=k[c*4+g]}}try{h.putImageData(l,0,0)}catch(n){}},33);setInterval(function(){i[f(a)*a+f(a)]+=f(-900)},300)})();
         </script> 
-	</body> 
+  </body> 
 </html>

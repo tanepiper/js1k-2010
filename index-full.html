@@ -1,136 +1,136 @@
 <!doctype html> 
 <html> 
-	<head> 
-		<title>JS1k, 1k demo submission</title> 
-		<meta charset="utf-8" /> 
-	</head> 
-	<body> 
-		<canvas id="c"></canvas> 
-		<ul>
-		    <li>Click on the canvas to create a new ripple</li>
-		    <li>Hold Ctrl + Click to change the gradient background</li> 
-		</ul>
-		<script>
-		/**
+  <head> 
+      <title>JS1k, 1k demo submission</title> 
+      <meta charset="utf-8" /> 
+  </head> 
+  <body> 
+      <canvas id="c"></canvas> 
+      <ul>
+          <li>Click on the canvas to create a new ripple</li>
+          <li>Hold Ctrl + Click to change the gradient background</li> 
+      </ul>
+      <script>
+      /**
 Generates procedural water ripple effects on top of a randomly
 generated gradient background.
 
 Click on the canvas to generate a new wave, hold Ctrl + Click to change the gradient background
 
 1.0
-    * Origional Release
+  * Origional Release
 1.1
-    * Fix for Firefox
+  * Fix for Firefox
 1.2
-    * Further exception catch for Firefox canvas bug (https://bugzilla.mozilla.org/show_bug.cgi?id=498826)
-    * Added onclick to canvas to randomly change gradient background
-    * Savage Optimisation
+  * Further exception catch for Firefox canvas bug (https://bugzilla.mozilla.org/show_bug.cgi?id=498826)
+  * Added onclick to canvas to randomly change gradient background
+  * Savage Optimisation
 1.3
-    * Removed onready stuff
-    * Removed setter methods on canvas for size
-    * Added handler for click to create new ripple, Ctrl + Click to change background
-    * Fred Savage Optimisation
-    
+  * Removed onready stuff
+  * Removed setter methods on canvas for size
+  * Added handler for click to create new ripple, Ctrl + Click to change background
+  * Fred Savage Optimisation
+  
 Some work based on the origional algorithim from http://bit.ly/bmDo1Q, optimised
 for 1Kb
-		*/
-    (function() {    
-	    var size=200,
-	        check=199,
-	        buffer1=[],
-	        buffer2=[],
-	        cvs,
-	        ctx,
-	        initData,
-	        renderData;
-	        	    
-	    function gradient() {
-	        var gradient;
-	        ctx.clearRect(0,0,size,size);
-	        gradient = ctx.createRadialGradient(0,0,0,0,0,size);
-	        var c1=[mathRand(99), mathRand(99),mathRand(99)];
-	        gradient.addColorStop(0, 'rgb(' + c1.join(',') + ')');
-	        var c2=[mathRand(50+205), mathRand(50+205),mathRand(50+205)];
-	        gradient.addColorStop(1, 'rgb(' + c2.join(',') + ')');
-	        ctx.fillStyle = gradient;
-	        ctx.fillRect(0,0,size,size);
-	        initData = ctx.getImageData(0,0,size,size).data;
-	        renderData = ctx.getImageData(0,0,size,size);
-	    }
-	    
-	    function processWater(source, dest) {
-	        for (var i=dest.length-size; i>size; i--) {
-		        var xi = i % size;
-		        if ((xi==0) || (xi==check)) continue; 
-			    dest[i] = (
-			        ((source[i-1]+
-			        source[i+1]+
-			        source[i-size]+
-			        source[i+size]) >> 1)) - dest[i];
-			    dest[i] -= (dest[i] >> 5);
-		    }
-        }
-        
-        function texture(buffer) {
-            var xoffset, yoffset;
-            
-            for (var i=buffer.length-size; i>size; i--) {
-		        // check for bounds
-		        var xi = i % size;
-		        if ((xi==0) || (xi==check)) continue; 
-			    xoffset = buffer[i-1] - buffer[i+1];
-	            yoffset = buffer[i-size] - buffer [i+size];
-	            var offset = i+xoffset+yoffset*size;
-	            if (offset>0 && offset<buffer.length) {
-                    for (var x=4;x>0;x--) { //4 for alpha
-			            renderData.data[i*4+x] = initData[offset*4+x];
-		            }
-	            }
-            }
-            try {
-	            ctx.putImageData(renderData, 0, 0);
-	        } catch(e) {
-	            // This is to catch the occasional error thrown up in Firefox
-	            // Known Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=498826
-	            // Canvas test suite to confirm: http://philip.html5.org/tests/canvas/suite/tests/index.2d.imageData.put.dirty.html
-	        }
-        }
-	    	    
-	    function mathRand(modifier) {
-	        return Math.round(Math.random() * modifier);
-	    }
-	    
-	    function clickHandler(event) {
-	        (event.ctrlKey) ? gradient() : create(event);
-	    }
-	    
-	    function create(event) {
-	        var x = event.clientX;
-	        var y = event.clientY;
-	        buffer1[y*size+x] = -900;    
-	    }
-	    
-	    cvs=document.body.children[0];
-	    cvs.width = cvs.height = size;
-	    cvs.onclick = clickHandler;
-	    ctx=cvs.getContext('2d');
-	    gradient();
-	    for( var i = (initData.length / 4); i > 0 ; i--) {
-	        buffer1[i]=0;
-	        buffer2[i]=0;
-        }
-        setInterval(function() {
-	        processWater(buffer2, buffer1);
-	        var tmp = buffer1;
-	        buffer1 = buffer2;
-	        buffer2 = tmp;
-	        texture(buffer1);
-	    }, 33);
-	    setInterval(function() {
-	        buffer1[(mathRand(size) * size + mathRand(size))] += mathRand(-900);    
-	    }, 300);
-    })();
-    
-		</script> 
-	</body> 
+      */
+  (function() {    
+      var size=200,
+          check=199,
+          buffer1=[],
+          buffer2=[],
+          cvs,
+          ctx,
+          initData,
+          renderData;
+                  
+      function gradient() {
+          var gradient;
+          ctx.clearRect(0,0,size,size);
+          gradient = ctx.createRadialGradient(0,0,0,0,0,size);
+          var c1=[mathRand(99), mathRand(99),mathRand(99)];
+          gradient.addColorStop(0, 'rgb(' + c1.join(',') + ')');
+          var c2=[mathRand(50+205), mathRand(50+205),mathRand(50+205)];
+          gradient.addColorStop(1, 'rgb(' + c2.join(',') + ')');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0,0,size,size);
+          initData = ctx.getImageData(0,0,size,size).data;
+          renderData = ctx.getImageData(0,0,size,size);
+      }
+      
+      function processWater(source, dest) {
+          for (var i=dest.length-size; i>size; i--) {
+              var xi = i % size;
+              if ((xi==0) || (xi==check)) continue; 
+              dest[i] = (
+                  ((source[i-1]+
+                  source[i+1]+
+                  source[i-size]+
+                  source[i+size]) >> 1)) - dest[i];
+              dest[i] -= (dest[i] >> 5);
+          }
+      }
+      
+      function texture(buffer) {
+          var xoffset, yoffset;
+          
+          for (var i=buffer.length-size; i>size; i--) {
+              // check for bounds
+              var xi = i % size;
+              if ((xi==0) || (xi==check)) continue; 
+              xoffset = buffer[i-1] - buffer[i+1];
+              yoffset = buffer[i-size] - buffer [i+size];
+              var offset = i+xoffset+yoffset*size;
+              if (offset>0 && offset<buffer.length) {
+                  for (var x=4;x>0;x--) { //4 for alpha
+                      renderData.data[i*4+x] = initData[offset*4+x];
+                  }
+              }
+          }
+          try {
+              ctx.putImageData(renderData, 0, 0);
+          } catch(e) {
+              // This is to catch the occasional error thrown up in Firefox
+              // Known Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=498826
+              // Canvas test suite to confirm: http://philip.html5.org/tests/canvas/suite/tests/index.2d.imageData.put.dirty.html
+          }
+      }
+              
+      function mathRand(modifier) {
+          return Math.round(Math.random() * modifier);
+      }
+      
+      function clickHandler(event) {
+          (event.ctrlKey) ? gradient() : create(event);
+      }
+      
+      function create(event) {
+          var x = event.clientX;
+          var y = event.clientY;
+          buffer1[y*size+x] = -900;    
+      }
+      
+      cvs=document.body.children[0];
+      cvs.width = cvs.height = size;
+      cvs.onclick = clickHandler;
+      ctx=cvs.getContext('2d');
+      gradient();
+      for( var i = (initData.length / 4); i > 0 ; i--) {
+          buffer1[i]=0;
+          buffer2[i]=0;
+      }
+      setInterval(function() {
+          processWater(buffer2, buffer1);
+          var tmp = buffer1;
+          buffer1 = buffer2;
+          buffer2 = tmp;
+          texture(buffer1);
+      }, 33);
+      setInterval(function() {
+          buffer1[(mathRand(size) * size + mathRand(size))] += mathRand(-900);    
+      }, 300);
+  })();
+  
+      </script> 
+  </body> 
 </html>
