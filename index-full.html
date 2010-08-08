@@ -8,7 +8,7 @@
       <canvas id="c"></canvas> 
       <ul>
           <li>Click on the canvas to create a new ripple</li>
-          <li>Hold Ctrl + Click to change the gradient background</li> 
+          <li>Hold Shift + Click to change the gradient background</li> 
       </ul>
       <script>
       /**
@@ -28,7 +28,7 @@ Click on the canvas to generate a new wave, hold Ctrl + Click to change the grad
 1.3
   * Removed onready stuff
   * Removed setter methods on canvas for size
-  * Added handler for click to create new ripple, Ctrl + Click to change background
+  * Added handler for click to create new ripple, Shift + Click to change background
   * Fred Savage Optimisation
   
 Some work based on the origional algorithim from http://bit.ly/bmDo1Q, optimised
@@ -101,7 +101,7 @@ for 1Kb
       }
       
       function clickHandler(event) {
-          (event.ctrlKey) ? gradient() : create(event);
+          (event.shiftKey) ? gradient() : create(event);
       }
       
       function create(event) {
