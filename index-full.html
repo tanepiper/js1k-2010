@@ -50,7 +50,7 @@ for 1Kb
           gradient = ctx.createRadialGradient(0,0,0,0,0,size);
           var c1=[mathRand(99), mathRand(99),mathRand(99)];
           gradient.addColorStop(0, 'rgb(' + c1.join(',') + ')');
-          var c2=[mathRand(50+205), mathRand(50+205),mathRand(50+205)];
+          var c2=[mathRand(255), mathRand(255),mathRand(255)];
           gradient.addColorStop(1, 'rgb(' + c2.join(',') + ')');
           ctx.fillStyle = gradient;
           ctx.fillRect(0,0,size,size);
@@ -125,10 +125,10 @@ for 1Kb
           buffer1 = buffer2;
           buffer2 = tmp;
           texture(buffer1);
-      }, 33);
+      }, 50);
       setInterval(function() {
           buffer1[(mathRand(size) * size + mathRand(size))] += mathRand(-900);    
-      }, 300);
+      }, 500);
   })();
   
       </script> 
