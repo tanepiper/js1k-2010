@@ -12,30 +12,37 @@
     </ul>
     <script>
 /**
-Generates procedural water ripple effects on top of a randomly
-generated gradient background.
+Generates procedural water ripple effects on top of a randomly generated gradient background.
+Click on the canvas to generate a new wave, hold Shift + Click to change the gradient background.
 
-Click on the canvas to generate a new background, the ripple effect
-works best on backgrounds with a good varient of colour.
+There is an issue with the Firefox canvas implementation that is a known bug (https://bugzilla.mozilla.org/show_bug.cgi?id=498826)
+There is no way around this issue at this time, with a test case to confirm this:
+http://philip.html5.org/tests/canvas/suite/tests/index.2d.imageData.put.dirty.html
 
 1.0
-    * Origional Release
+  * Original Release
 1.1
-    * Fix for Firefox
+  * Fix for Firefox
 1.2
-    * Further exception catch for Firefox canvas bug (https://bugzilla.mozilla.org/show_bug.cgi?id=498826)
-    * Added onclick to canvas to randomly change gradient background
-    * Savage Optimisation
+  * Further exception catch for Firefox canvas bug (https://bugzilla.mozilla.org/show_bug.cgi?id=498826)
+  * Added onclick to canvas to randomly change gradient background
+  * Savage Optimisation
 1.3
-    * Removed onready stuff
-    * Removed setter methods on canvas for size
-    * Added handler for click to create new ripple, Shift + Click to change background
-    * Fred Savage Optimisation
-    
-Some work based on the origional algorithim from http://bit.ly/bmDo1Q, optimised for 1Kb
+  * Removed onready stuff
+  * Removed setter methods on canvas for size
+  * Added handler for click to create new ripple, Ctrl + Click to change background
+  * Fred Savage Optimisation
+1.4
+  * Changed handler from Ctrl to Shift for better Mac support
+1.5
+  * Savage Garden Optimisation, final version for submission
+
+Some work based on the origional algorithim from http://bit.ly/bmDo1Q, optimised
+for 1Kb
 */
-(function(){function m(){var b;h.clearRect(0,0,a,a);b=h.createRadialGradient(0,0,0,0,0,a);var d=[f(99),f(99),f(99)];b.addColorStop(0,"rgb("+d.join(",")+")");d=[f(255),f(255),f(255)];b.addColorStop(1,"rgb("+d.join(",")+")");h.fillStyle=b;h.fillRect(0,0,a,a);k=h.getImageData(0,0,a,a).data;l=h.getImageData(0,0,a,a)}function f(b){return Math.round(Math.random()*b)}var a=200,i=[],j=[],e,h,k,l;e=document.body.children[0];e.width=e.height=a;e.onclick=function(b){if(b.shiftKey)m();else i[b.clientY*a+b.clientX]=
--900};h=e.getContext("2d");m();for(e=k.length/4;e>0;e--){i[e]=0;j[e]=0}setInterval(function(){for(var b=j,d=i,c=d.length-a;c>a;c--){var g=c%a;if(!(g==0||g==199)){d[c]=(b[c-1]+b[c+1]+b[c-a]+b[c+a]>>1)-d[c];d[c]-=d[c]>>5}}b=i;i=j;j=b;b=i;for(d=b.length-a;d>a;d--){c=d%a;if(!(c==0||c==199)){c=b[d-1]-b[d+1];g=b[d-a]-b[d+a];c=d+c+g*a;if(c>0&&c<b.length)for(g=4;g>0;g--)l.data[d*4+g]=k[c*4+g]}}try{h.putImageData(l,0,0)}catch(n){}},33);setInterval(function(){i[f(a)*a+f(a)]+=f(-900)},300)})();
+(function(){function o(){g.clearRect(0,0,a,a);var b=g.createRadialGradient(0,0,0,0,0,a),c=[e(i),e(i),e(i)];b.addColorStop(0,"rgb("+c.join(",")+")");c=[e(i),e(i),e(i)];b.addColorStop(1,"rgb("+c.join(",")+")");g.fillStyle=b;g.fillRect(0,0,a,a);l=g.getImageData(0,0,a,a).data;m=g.getImageData(0,0,a,a)}function e(b){return Math.round(Math.random()*b)}var a=200,i=255,h=[],k=[],f,g,l,m,n;f=document.body.children[0];f.width=f.height=a;f.onclick=function(b){if(b.shiftKey)o();else h[b.clientY*a+b.clientX]=
+-900};g=f.getContext("2d");o();f=l.length/4;do{h[f]=0;k[f]=0}while(--f);n=h.length-a;setInterval(function(){var b=k,c=h,d=n;do{if(d==a)break;var j=d%a;if(!(!j||j==199)){c[d]=(b[d-1]+b[d+1]+b[d-a]+b[d+a]>>1)-c[d];c[d]-=c[d]>>5}}while(--d);b=h;h=k;k=b;b=h;c=n;do{if(c==a)break;d=c%a;if(!(!d||d==199)){d=c+(b[c-1]-b[c+1])+(b[c-a]-b[c+a])*a;if(d>0&&d<b.length){j=4;do m.data[c*4+j]=l[d*4+j];while(--j)}}}while(--c);try{g.putImageData(m,0,0)}catch(p){}},80);setInterval(function(){h[e(a)*a+e(a)]+=e(-900)},
+600)})();
         </script> 
   </body> 
 </html>
