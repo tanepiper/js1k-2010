@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head>
+      <title>JS1k, 1k demo submission</title>
+      <meta charset="utf-8" />
+  </head>
+  <body>
+      <canvas id="c"></canvas> 
+      <script>
+var M=Math,c1=document.body.children[0],c2=document.createElement("canvas");w=640;h=480;r1=c1.getContext("2d");r2=c2.getContext("2d");k=[];f=5;a=80;c1.width=c2.width=w;c1.height=c2.height=h;c1.style.backgroundColor=c2.style.backgroundColor="#000";onclick=v;function m(d){return M.round(M.random()*d)}function c(){k=[];for(var d=0;d<3;d++)k.push("rgb("+m(255)+","+m(255)+","+m(255)+")")}function v(){f=m(10);a=m(200)}
+function r(){r2.clearRect(0,0,w,h);for(var d=0;d<k.length;d++){r2.beginPath();r2.moveTo(-10,h/2);r2.lineWidth=5+m(10);r2.strokeStyle=k[d];for(var b=0;b<w+10;b++)r2.lineTo(b,h/2-a*M.sin(2*M.PI*f*b/w));r2.stroke()}r1.clearRect(0,0,w,h);r1.drawImage(r2.canvas,0,0);r1.globalCompositeOperation="lighter";r2.globalCompositeOperation="copy";for(b=0;b<5;b++){r2.drawImage(r2.canvas,0,0,w>>b,h>>b,0,0,h>>b,h/2>>b);r1.drawImage(r2.canvas,0,0,h>>b,h/2>>b,0,0,w,h)}setTimeout(r,60)}setInterval(c,2E3);c();r();      </script>
+  </body>
+</html>
