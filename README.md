@@ -1,8 +1,7 @@
-==================================
-Ripple + Gradient effects in < 1Kb
-==================================
+# Ripple + Gradient effects in < 1Kb
 
-Tane Piper <tane@digitalspaghetti.me.uk>
+## This project is only here for archive purposes.
+
 
 This is the source code of my entry for the #JS1K competition (http://js1k.com/)
 
